@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 const Home = ({ userCount }) => {
     return (
@@ -8,4 +9,10 @@ const Home = ({ userCount }) => {
     )
 }
 
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        userCount: state.userCount
+    }
+}
+
+export default connect(mapStateToProps)(Home);
