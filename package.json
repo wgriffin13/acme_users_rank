@@ -2,10 +2,10 @@
   "name": "acme_users_rank",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "postinstall": "npm run webpack --mode=development",
+    "postinstall": "npm run webpack",
     "webpack": "webpack",
     "webpack:dev": "npm run webpack --mode=development --watch",
     "start:dev": "npm run webpack:dev & nodemon app.js --ignore src/ --ignore dist/",
