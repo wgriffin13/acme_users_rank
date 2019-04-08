@@ -5,8 +5,10 @@ import Nav from './Nav';
 import { getUsers } from './store';
 import { connect } from 'react-redux';
 import Users from './Users'
+import UserForm from './UserForm'
 
 class App extends Component {
+
 
     componentDidMount () {
         this.props.requestGetUsers();
@@ -14,12 +16,17 @@ class App extends Component {
 
     render () {
         return (
-            <div>
+            <div className="container ">
             <h1>Acme Users With Ranks</h1>
                 <div>
-                    <Nav />
+                    <Nav userCount={this.props.users.length} highestRankedUsers={this.props.highestRankedUsers} />
                     <Route exact path="/" component={Home} />
-                    <Route exact path="/users" component={Users} />
+                    <Route exact path="/users" render={() => <Users users={this.props.users} />} />
+                    <Switch>
+                        <Route exact path="/users/create" render={({history}) => <UserForm history={history} />} />
+                        <Route exact path="/users/topRanked" render={() => <Users users={this.props.highestRankedUsers} />} />
+                        <Route exact path="/users/:id" render={({match, history}) => <UserForm match={match} history={history} />} />
+                    </Switch>
                 </div>
             </div>
         )
@@ -32,4 +39,11 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(App)
+const mapStateToProps = (state) => {
+    return {
+        users: state.users,
+        highestRankedUsers: state.highestRankedUsers
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)
